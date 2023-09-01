@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "scaled-images-to-pdf"
+version = "0.1.0"
+description = "This is simple online app for generating pdf from multiple images"
+authors = ["Rafał Nowicki"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fpdf2 = "^2.7.5"
+pillow = "^10.0.0"
+flask = "^2.3.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
