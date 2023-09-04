@@ -5,7 +5,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script> -->
 </head>
 
 <body>
@@ -23,7 +22,7 @@
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
                             </svg>
                             <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
-                            <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF</p>
                             <div id="msg"></div>
                         </div>
                         <input class="w-40" id="file-picker" type="file" type="file" name="file" accept="image/*" multiple />
@@ -31,12 +30,10 @@
                 </div>
 
                 <div class="mb-6">
-                    <label for="default-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Scale ratio (1 means original size)</label>
-                    <input type="text" id="scale" name="scale" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="11.6">
+                    <label for="default-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Scale ratio</label>
+                    <input type="text" id="scale" name="scale" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-2" value="0">
+                    <p class="text-gray-600 text-xs italic">Set "1" to keep original size, "0" to scale to page size or any ratio you wan't to scale your images.</p>
                 </div>
-
-                <!-- <strong>Files:</strong><br>
-                <input id="file-picker" type="file" name="file" accept="image/*" multiple> -->
 
             </div>
 
@@ -45,6 +42,12 @@
             </button>
         </form>
     </div>
+
+    <script>
+    var param = /[&?]scale=([^&]+)/.exec(location.search);
+    if (param)
+        document.getElementById('scale').value = param[1];
+    </script>​
 
 </body>
 </html>

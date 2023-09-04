@@ -10,7 +10,7 @@ def get_orientation(width: int, height: int) -> Orientation:
     return Orientation.LANDSCAPE.value if width > height else Orientation.PORTRAIT.value
 
 
-def generate_pdf_from_path(path: Path, scale_ratio: float = 11.6) -> None:
+def generate_pdf_from_path(path: Path, filename: str, scale_ratio=None) -> None:
 
     # Get the list of images
     image_list: list[Path] = os.listdir(path)
@@ -25,8 +25,15 @@ def generate_pdf_from_path(path: Path, scale_ratio: float = 11.6) -> None:
         w, h = image_obj.size
         orientation: Orientation = get_orientation(w, h)
 
+        if scale_ratio:
+            width = w / scale_ratio
+            height = h / scale_ratio
+        else:
+            width = 297 if orientation == Orientation.LANDSCAPE.value else 0
+            height = 210 if orientation == Orientation.PORTRAIT.value else 0
+
         pdf.add_page(orientation=orientation)
-        pdf.image(image_file, 0, 0, w / scale_ratio, h / scale_ratio, keep_aspect_ratio=True)
+        pdf.image(image_file, 0, 0, width, height, keep_aspect_ratio=True)
 
     # Save the PDF file
-    pdf.output(f"{path}/output.pdf")
+    pdf.output(f"{path}/{filename}.pdf")

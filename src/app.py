@@ -1,4 +1,5 @@
 import os
+import time
 from pathlib import Path
 from typing import Optional
 from flask import Flask, Response, render_template, send_file, request
@@ -20,10 +21,9 @@ def upload() -> Response:
 
     # Get the scale ratio from form
     try:
-        scale_ratio: float = float(request.form.get('scale', 11.6))
+        scale_ratio: float = float(request.form.get('scale', '').replace(',', '.'))
     except (TypeError, ValueError):
-        message = "The scale ratio should be float type"
-        return render_template('error.html', error_message=message)
+        scale_ratio = None
 
     # Get the file from form
     target: Path = os.path.join(APP_ROOT, f"images/{uuid4()}")
@@ -39,10 +39,10 @@ def upload() -> Response:
             message = "Have you uploaded the image ? Reload the page and try again"
             return render_template('error.html', error_message=message)
 
-    generate_pdf_from_path(target, scale_ratio)
-
-    return send_file(f"{target}/output.pdf", as_attachment=True)
+    filename = time.strftime("%Y%m%d-%H%M%S")
+    generate_pdf_from_path(target, filename, scale_ratio)
+    return send_file(f"{target}/{filename}.pdf", as_attachment=True)
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port="8000", debug=True)
